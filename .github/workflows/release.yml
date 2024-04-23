@@ -21,8 +21,11 @@ jobs:
     - name: Build Docker image and generate PDF
       run: |
         make docker
+    - name: Ls dir
+      run: ls -al
     - name: Make a release
       uses: "softprops/action-gh-release@v2"
-      if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: db.pdf
+        files: ./db.pdf
+        name: "Rolling release"
+        tag_name: ${{ github.run_number }}
