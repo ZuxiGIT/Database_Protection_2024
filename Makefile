@@ -1,10 +1,14 @@
 PWD := $(shell pwd)
+tex_files := $(shell find -type f -name '*.tex' -or -name '*.bib')
 
-all: build run
+all: build run clean
 
-build:
-	latexmk -pdf db.tex
-run:
+db.pdf: $(tex_files)
+	latexmk -Werror -pdf db.tex
+
+build: db.pdf
+
+run: build
 	evince db.pdf &
 
 clean:
